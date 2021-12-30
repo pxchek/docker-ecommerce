@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  cart-service:
+    container_name: cart-service
+    restart: on-failure
+    depends_on:
+      - docker-ecomm-mysql
+
+  checkout-service:
+    container_name: checkout-serice
+    restart: on-failure
+    depends_on:
+      - docker-ecomm-mysql
+
+  order-service:
+    container_name: order-service
+    restart: on-failure
+    depends_on:
+      - docker-ecomm-mysql
+
+  product-service:
+    container_name: product-service
+    restart: on-failure
+    depends_on:
+      - docker-ecomm-mysql
+
+  docker-mysql:
+    container_name: docker-mysql
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: ecommdb
+      MYSQL_ROOT_PASSWORD: abc123
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+    ports:
+      - 6666:3306
+    healthcheck:
+      test: "/usr/bin/mysql --user=root password=abc123 --execute \"SHOW DATABASES \""
+      interval: 1s
+      timeout: 20s
+      retries: 10
