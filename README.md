@@ -4,7 +4,7 @@ mvn clean
 
 mvn install - Build container images
 
-docker-compose up - Create and run the containers with microservices.
+docker-compose up --detach - Create, run and detach the containers with microservices.
 
 docker-ecommerce % docker-compose ps
 
